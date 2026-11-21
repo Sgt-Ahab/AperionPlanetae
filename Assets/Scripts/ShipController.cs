@@ -4,9 +4,11 @@
 //Attach: Player/Player Sprite
 //==============================================
 using System.Collections;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+
 
 
 //Ship moves, fires projectiles, and drops bombs on Ground Units, since any collision kills one
@@ -57,7 +59,7 @@ public class ShipController : MonoBehaviour
     private GameObject ActiveShield;
     private Vector3 OriginalScale;
     private Vector3 DiveScale;
-
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
