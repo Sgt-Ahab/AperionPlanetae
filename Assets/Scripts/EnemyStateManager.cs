@@ -110,6 +110,5 @@ public class EnemyStateManager : MonoBehaviour
                 yield return new WaitForSeconds(SpawnTime);
             }
         }
-
     }
 }

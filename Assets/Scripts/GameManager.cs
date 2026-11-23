@@ -5,6 +5,7 @@
 //Attach: GameStateManager
 //==============================================
 using System.Collections.Generic;
+using System.Collections;
 using System.IO;
 using System.Linq;
 using TMPro;
@@ -74,13 +75,14 @@ public class GameManager : MonoBehaviour
         GameOverPanel.SetActive(false);
         TrueMaxLabel.enabled = false;
         FalseMaxLabel.enabled = false;
+        PauseGame.Enable();
         IsMaxScore = false;
         PausePanel.SetActive(false);
         IsPaused = false;
         ResetButton.onClick.AddListener(() => ResetGameState());
-        SoundAssemble();
         BackgroundSource = GetComponent<AudioSource>();
         TrackIndex = 0;
+        SoundAssemble();
         
     }
 
@@ -129,7 +131,10 @@ public class GameManager : MonoBehaviour
         EnclaveFrameTimer += Time.deltaTime;
         if (!GameOverPanel.activeSelf)
         {
-
+            if(PauseGame.WasPressedThisFrame())
+            {
+                TogglePause();
+            }
         }
     }
     //I/O File Write and Check, delim is `,`
@@ -157,6 +162,7 @@ public class GameManager : MonoBehaviour
     }
     private void SaveScores()
     {
+        //Need Player Prefs for WebGL to write and save
         int ScoreInt = (int)PlayerScore;
         string DataString = "";
         List<int> PlayerScores = LoadScores();
@@ -180,6 +186,8 @@ public class GameManager : MonoBehaviour
         }
         DataString = string.Join(",", PlayerScores);
         File.WriteAllText(Path, DataString);
+        PlayerPrefs.SetInt("Sync", 1);
+        PlayerPrefs.Save();
 
     }
     //Background Rendition, using the Sprite Backgrounds
@@ -224,10 +232,16 @@ public class GameManager : MonoBehaviour
     public void GameOverState()
     {
         //Game Over state, time stops, and save score
+        //Save only first instance
+        if(GameOverPanel.activeSelf)
+        {
+            return;
+        }
         SaveScores();
         Time.timeScale = 0f;
         //Add the canvas and make it visible
         GameOverPanel.SetActive(true);
+        AudioListener.pause = true;
         PresentMaxScores();
     }
     public void AddScore(float IncrementScore)
@@ -241,16 +255,17 @@ public class GameManager : MonoBehaviour
         EnclaveFrameTimer = 0;
         EnemyFrameTimer = 0;
         Time.timeScale = 1f;
+        AudioListener.pause = false;
         SceneManager.LoadScene("MainGame");
     }
     private void PresentMaxScores()
     {
         //This reads our file, and beautifies it for presentation
         List<int> MaxPayload = LoadScores();
-        MaxScoreLabel.text = "High Scores: ";
+        MaxScoreLabel.text = "High Scores:\n";
         for (int i = 0; i < MaxPayload.Count; i++)
         {
-            MaxScoreLabel.text += "#" + (i + 1) + "| " + MaxPayload[i] + " |";
+            MaxScoreLabel.text += "#" + (i + 1) + " " + MaxPayload[i] + "\n";
         }
         //Bool check for the max score
         if (IsMaxScore)
@@ -277,12 +292,32 @@ public class GameManager : MonoBehaviour
         AudioListener.pause = false;
         SceneManager.LoadScene("MainMenu");
     }
-    private void SoundAssemble()
+    public void QuitGame()
+    {
+        //Quit Button leaves the application
+        Debug.Log("Quitting Application. . .");
+        Application.Quit();
+    }
+    public void SoundAssemble()
     {
         //Takes our sound array and plays through it
-        if (BackgroundTracks.Length > 0 && TrackIndex != BackgroundTracks.Length)
+        if (BackgroundTracks.Length > 0)
         {
-
+            // Use modulo to go back to 0, using a CoRoutine
+            StartCoroutine(MusicLoop());                        
+            IEnumerator MusicLoop()
+            {
+                while(true)
+                {
+                    //Start the music player
+                    BackgroundSource.clip = BackgroundTracks[TrackIndex];
+                    BackgroundSource.Play();
+                    //Ensure Negated playing and pause so track is not skipped in pause
+                    yield return new WaitUntil(() => !BackgroundSource.isPlaying && !AudioListener.pause);
+                    //Use Modulo to reach max and reset to 0
+                    TrackIndex = (TrackIndex + 1) % BackgroundTracks.Length;
+                }
+            }
         }    
     }
 }

@@ -41,12 +41,22 @@ public class ShipController : MonoBehaviour
     private Transform[] BulletSpawnpoints;
     [SerializeField]
     private GameObject ShieldPrefab;
+    [Header("Grid Corners")]
+    [SerializeField]
+    private float XMin;
+    [SerializeField]
+    private float XMax;
+    [SerializeField]
+    private float YMin;
+    [SerializeField]
+    private float YMax;
     // Add in the 'GameStateManager'
     private GameManager GameBrain;
     [Header("Ship Jump Data")]
     private bool IsDiving;
     private bool HasShield;
     private bool HasBoost;
+    private bool IsAutoFire;
     [SerializeField]
     private float JumpDuration;
     [SerializeField]
@@ -55,7 +65,7 @@ public class ShipController : MonoBehaviour
     [SerializeField]
     private float SpeedMultiplier;
     [SerializeField]
-    private float SpeedDuration;
+    private float PowerUpDuration;
     private GameObject ActiveShield;
     private Vector3 OriginalScale;
     private Vector3 DiveScale;
@@ -76,6 +86,7 @@ public class ShipController : MonoBehaviour
         IsDiving = false;
         HasShield = false;
         HasBoost = false;
+        IsAutoFire = false;
         OriginalScale = this.transform.localScale;
         DiveScale.x = OriginalScale.x * 1.5f;
         DiveScale.y = OriginalScale.y * 1.5f;
@@ -85,6 +96,7 @@ public class ShipController : MonoBehaviour
     private void FixedUpdate()
     {
         ShipInteraction();
+        BoundShip();
     }
     // Update is called once per frame
     private void Update()
@@ -116,9 +128,9 @@ public class ShipController : MonoBehaviour
     }
     private void ShipInteraction()
     {
-        //Since the ControlSuite expands from WASD + ARROWS with Space for bombs,
-        //and I think Ctrl L|R both can fire
-        //Update Location for movement, make OB, and cannot move past it (bcuz polygon collider)
+        //Since the ControlSuite expands from WASD + ARROWS with Space for bombs[Bombs scrapped for personal time],
+        //and I think Ctrl L|R both can fire[they do, signed-off]-DS
+        //Update Location for movement, make OB, and cannot move past it (bcuz polygon collider) [Removed NoCollider Exploit on OB]-DS
         Vector2 ShipLocation = ShipControlSuite.ReadValue<Vector2>();
         rb.linearVelocity = ShipLocation * ShipSpeed;
     }
@@ -185,9 +197,45 @@ public class ShipController : MonoBehaviour
             {
                 HasBoost = true;
                 ShipSpeed = ShipSpeed * SpeedMultiplier;
-                yield return new WaitForSeconds(SpeedDuration);
+                yield return new WaitForSeconds(PowerUpDuration);
                 ShipSpeed = BaseSpeed;
                 HasBoost = false;
+            }
+        }
+    }
+    private void BoundShip()
+    {
+        //Grid Coords | XMin - -8.585256; YMin - -4.580162; XMax - 8.398458; YMax - 4.677525;
+        Vector2 CurrPOS = rb.position;
+        CurrPOS.x = Mathf.Clamp(CurrPOS.x, XMin, XMax);
+        CurrPOS.y = Mathf.Clamp(CurrPOS.y, YMin, YMax);
+        rb.position = CurrPOS;
+    }
+    public void ActivateAutoFire()
+    {
+        //Use /SpeedDuration/(Change to PowerUpDuration)
+        //CoRoutine it, and I nail the 3 Collectable + Score
+        if (IsAutoFire == false)
+        {
+            StartCoroutine(AutoFireCycle());
+            IEnumerator AutoFireCycle()
+            {
+                //Local float timer, to keep duration & local shoot frame
+                float EndTime = Time.time + PowerUpDuration;
+                IsAutoFire = true;
+                while (Time.time < EndTime)
+                {
+                    if(IsDiving == false)
+                    {
+                        for (int i = 0; i < BulletSpawnpoints.Length; i++)
+                        {
+                            Vector2 Spawnpoint = BulletSpawnpoints[i].position;
+                            Shoot(Spawnpoint);
+                        }
+                    }
+                    yield return new WaitForSeconds(0.1f);
+                }
+                IsAutoFire = false;
             }
         }
     }

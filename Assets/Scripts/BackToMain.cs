@@ -14,9 +14,11 @@ public class BackToMain : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        //Add an Event Listenr to Button
         Button.onClick.AddListener( () => PanelToggle());
         
     }
+    //Toggle Panel the button is attached to
     private void PanelToggle()
     {
        CurrentPanel.SetActive(false);

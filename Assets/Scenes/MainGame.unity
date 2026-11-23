@@ -462,8 +462,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -385.09796, y: 75.64661}
-  m_SizeDelta: {x: 342.406, y: 83.8588}
+  m_AnchoredPosition: {x: -246.23361, y: 86.23658}
+  m_SizeDelta: {x: 680.3654, y: 127.6492}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &333057359
 MonoBehaviour:
@@ -514,8 +514,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 32
+  m_fontSizeBase: 32
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -606,8 +606,19 @@ MonoBehaviour:
   - {fileID: -1882823232073806003, guid: 7e34a29f2db34a64f8a748b7fcf4a036, type: 3}
   - {fileID: -4841206460468622625, guid: 3ec867799a320784bb8d8c87c1d5dc61, type: 3}
   BackgroundSprite: {fileID: 1935964149}
-  EnemyWaveDelta: 15
-  EnclaveSpawnDelta: 25
+  BackgroundTracks:
+  - {fileID: 8300000, guid: 12384e44ef56ef44f9a4b0118fefcfbb, type: 3}
+  - {fileID: 8300000, guid: b5ce9afb4f9704c4685ec5654077c57c, type: 3}
+  - {fileID: 8300000, guid: da40fcf014392de429deb71ed6590d72, type: 3}
+  - {fileID: 8300000, guid: 41e6a74989c251c4ea41d998ce899198, type: 3}
+  - {fileID: 8300000, guid: 0fcdf68de9f7e8d4a8d71e50dd3b12a3, type: 3}
+  - {fileID: 8300000, guid: f7c623d9bd239754390a45ecf483855d, type: 3}
+  - {fileID: 8300000, guid: f863d0eaa39318247869b462d736e158, type: 3}
+  - {fileID: 8300000, guid: d0dacd6f289be724fb73602f6551e673, type: 3}
+  - {fileID: 8300000, guid: 737536c6eff2d0f49969b7402cd3ae4d, type: 3}
+  - {fileID: 8300000, guid: 55cc309b08bf3464595f6bb64be3215a, type: 3}
+  EnemyWaveDelta: 8
+  EnclaveSpawnDelta: 15
   GameOverPanel: {fileID: 1702804544}
   MaxScoreLabel: {fileID: 1398187054}
   FalseMaxLabel: {fileID: 1741642116}
@@ -641,6 +652,7 @@ MonoBehaviour:
       m_Flags: 0
     m_Flags: 0
     m_Priority: 0
+  ResetButton: {fileID: 1025064725}
 --- !u!4 &394093046
 Transform:
   m_ObjectHideFlags: 0
@@ -1641,7 +1653,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &975173971
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2056,7 +2068,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1082051613}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 394093045}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: QuitGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1082051613
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2885,8 +2909,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -388, y: 75.097}
-  m_SizeDelta: {x: 348.21, y: 82.759}
+  m_AnchoredPosition: {x: -252, y: 85.4}
+  m_SizeDelta: {x: 691.8981, y: 125.9751}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1741642116
 MonoBehaviour:
@@ -2937,8 +2961,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 32
+  m_fontSizeBase: 32
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -3608,7 +3632,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2027792642}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 394093045}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: ReturnToMain
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2027792642
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3731,6 +3767,22 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5560513942315265858, guid: 5d1ba32e62f6a2c48b3fcda5907fe024, type: 3}
+      propertyPath: XMax
+      value: 8.398458
+      objectReference: {fileID: 0}
+    - target: {fileID: 5560513942315265858, guid: 5d1ba32e62f6a2c48b3fcda5907fe024, type: 3}
+      propertyPath: XMin
+      value: -8.585256
+      objectReference: {fileID: 0}
+    - target: {fileID: 5560513942315265858, guid: 5d1ba32e62f6a2c48b3fcda5907fe024, type: 3}
+      propertyPath: YMax
+      value: 4.677525
+      objectReference: {fileID: 0}
+    - target: {fileID: 5560513942315265858, guid: 5d1ba32e62f6a2c48b3fcda5907fe024, type: 3}
+      propertyPath: YMin
+      value: -4.580162
+      objectReference: {fileID: 0}
+    - target: {fileID: 5560513942315265858, guid: 5d1ba32e62f6a2c48b3fcda5907fe024, type: 3}
       propertyPath: ShipSpeed
       value: 4
       objectReference: {fileID: 0}
@@ -3745,6 +3797,10 @@ PrefabInstance:
     - target: {fileID: 5560513942315265858, guid: 5d1ba32e62f6a2c48b3fcda5907fe024, type: 3}
       propertyPath: SpeedDuration
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5560513942315265858, guid: 5d1ba32e62f6a2c48b3fcda5907fe024, type: 3}
+      propertyPath: PowerUpDuration
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 5560513942315265858, guid: 5d1ba32e62f6a2c48b3fcda5907fe024, type: 3}
       propertyPath: ShipJumpAction.m_Name

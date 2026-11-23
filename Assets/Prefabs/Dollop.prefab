@@ -178,7 +178,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_MaskInteraction: 0
   m_Sprite: {fileID: -8608349460986890651, guid: 447bca39d63bd5e439cd191078dc842e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -298,6 +298,7 @@ MonoBehaviour:
   - {fileID: 7907941820449712135, guid: a4cc368ceb068e94c8bce4e2267a6105, type: 3}
   - {fileID: 7901611032590489609, guid: a7fadad3cb08e9e4d93138264f81a156, type: 3}
   - {fileID: 2708650844459988623, guid: 672adc6589dcf6d41b630e324371f27a, type: 3}
+  - {fileID: 8887745416497700163, guid: 57883c6474568174bb8bd9997b3df734, type: 3}
   BulletPrefab: {fileID: 3686036885100607668, guid: 40ef1e64fbd0eb54b975527cf54fd42c, type: 3}
   CanShoot: 1
   IsDollop: 1

@@ -113,6 +113,7 @@ public class EnemyData : MonoBehaviour
     }
     private void DollopFire()
     {
+        //This is how the Prefab Dollop fires
         if(PlayerPOS == null)
         {
             GameObject EnemyBullet = Instantiate(BulletPrefab, ProjectileSpawns[0].position, Quaternion.identity);

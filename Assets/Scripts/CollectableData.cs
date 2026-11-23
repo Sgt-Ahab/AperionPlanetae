@@ -42,6 +42,9 @@ public class CollectableData : MonoBehaviour
                 case 2:
                     Ship.ActivateBoost();
                     break;
+                case 3:
+                    Ship.ActivateAutoFire();
+                    break;
             }
             Destroy(this.gameObject);
         }
